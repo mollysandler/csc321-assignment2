@@ -2,6 +2,8 @@ from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad, unpad
 from Crypto.Random import get_random_bytes
 
+
+##not allowed to use the pad() stuff, gonna need to write our own. 
 def generate_key():
     return get_random_bytes(16)  # 16 bytes for AES-128
 
