@@ -11,12 +11,6 @@ def pkcs7_pad(data, block_size):
     padded_data = data + bytes([padding_value] * padding_value)
     return padded_data
 
-
-# Assuming plaintext is a bytes object and block_size is 16 (for AES-128)
-plaintext = b"Your plaintext data"
-
-
-
 def cbc_encrypt(plaintext, key, iv):
     cipher = AES.new(key, AES.MODE_ECB)
     blocks = [plaintext[i:i+AES.block_size] for i in range(0, len(plaintext), AES.block_size)]
