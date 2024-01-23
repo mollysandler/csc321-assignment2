@@ -7,6 +7,17 @@ from Crypto.Random import get_random_bytes
 def generate_key():
     return get_random_bytes(16)  # 16 bytes for AES-128
 
+def pkcs7_pad(data, block_size):
+    padding_value = block_size - len(data) % block_size
+    padded_data = data + bytes([padding_value] * padding_value)
+    return padded_data
+
+
+# Assuming plaintext is a bytes object and block_size is 16 (for AES-128)
+plaintext = b"Your plaintext data"
+
+
+
 def cbc_encrypt(plaintext, key, iv):
     cipher = AES.new(key, AES.MODE_ECB)
     blocks = [plaintext[i:i+AES.block_size] for i in range(0, len(plaintext), AES.block_size)]
@@ -33,7 +44,7 @@ def main():
     data = original_text[54:]
 
     # Padding the data
-    padded_data = pad(data, AES.block_size)
+    padded_data = pkcs7_pad(data, AES.block_size)
 
     # Generate key and IV
     key = generate_key()
