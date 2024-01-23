@@ -1,5 +1,4 @@
 from Crypto.Cipher import AES
-from Crypto.Util.Padding import pad
 from Crypto.Random import get_random_bytes
 
 def generate_key():
@@ -13,7 +12,7 @@ def pkcs7_pad(data, block_size):
 
 def ecb_encrypt(plaintext, key):
    cipher = AES.new(key, AES.MODE_ECB)
-   padded_plaintext = pad(plaintext, AES.block_size)
+   padded_plaintext = pkcs7_pad(plaintext, AES.block_size)
    ciphertext = cipher.encrypt(padded_plaintext)
    return ciphertext
 
