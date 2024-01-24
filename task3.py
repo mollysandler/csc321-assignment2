@@ -10,12 +10,9 @@ aes_256_throughput = [579671.44, 1044819.73, 1105381.46, 1115033.26, 1116990.20,
 # Plotting the graph
 plt.figure(figsize=(10, 6))
 
-plt.plot(range(len(block_sizes)), aes_128_throughput, label='AES-128-CBC', marker='o')
-plt.plot(range(len(block_sizes)), aes_192_throughput, label='AES-192-CBC', marker='o')
-plt.plot(range(len(block_sizes)), aes_256_throughput, label='AES-256-CBC', marker='o')
-
-# Set x-axis ticks at equal intervals
-plt.xticks(range(len(block_sizes)), block_sizes)
+plt.plot(block_sizes, aes_128_throughput, label='AES-128-CBC', marker='o')
+plt.plot(block_sizes, aes_192_throughput, label='AES-192-CBC', marker='o')
+plt.plot(block_sizes, aes_256_throughput, label='AES-256-CBC', marker='o')
 
 plt.xlabel('Block Size (bytes)')
 plt.ylabel('Throughput (KBytes/s)')
