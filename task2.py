@@ -23,10 +23,10 @@ def decrypt(encryptedParams):
 
 def submit():
     userInput = input("Enter a string: ")
-    urlEncoded = urllib.parse.quote(userInput, safe="")
-    modifiedInput = "userid=456;userdata=" + urlEncoded + ";session-id=31337"
+    encodedInput = urllib.parse.quote(userInput, safe="")
+    modifiedInput = "userid=456;userdata=" + encodedInput + ";session-id=31337"
 
-    print(modifiedInput)
+    print("Modified Input: ", modifiedInput)
     encrypted = (cbc_encrypt(modifiedInput.encode(), key, iv))
     return encrypted
     
