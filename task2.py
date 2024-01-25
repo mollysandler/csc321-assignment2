@@ -12,6 +12,10 @@ def pkcs7_pad(data, block_size): #writing my own padding function
    padded_data = data + bytes([padding_value] * padding_value) # create bytes object
    return padded_data
 
+def unpad_pkcs7(data):
+    padding = data[-1]
+    return data[:-padding]
+
 def cbc_encrypt(plaintext, key, iv): 
     cipher = AES.new(key, AES.MODE_CBC, iv)  # create AES cipher object, Use CBC mode 
     padded_plaintext = pkcs7_pad(plaintext, AES.block_size)  # Pad the plaintext
@@ -21,9 +25,8 @@ def cbc_encrypt(plaintext, key, iv):
 def decrypt(encryptedText):
     decipher = AES.new(key, AES.MODE_CBC, iv)
     paddedText = decipher.decrypt(encryptedText)
-    original = unpad(paddedText, AES.block_size, style='pkcs7')
+    original = unpad_pkcs7(paddedText)
     return original
-
 
 def submit():
     userInput = "#admin^true#"
@@ -34,7 +37,6 @@ def submit():
     ciphertext = cbc_encrypt(modifiedInput.encode(), key, iv)
     return ciphertext
     
-
 def modify(cipher):
     
     # Perform byte-level manipulation to inject ";admin=true;"
@@ -45,7 +47,7 @@ def modify(cipher):
     return bytes(cipher)
     
 def verify(encryptedInput):
-    print("encrypted input: ", encryptedInput, "\n------------------")  # Print the encrypted input directly
+    #print("encrypted input: ", encryptedInput, "\n------------------")  # Print the encrypted input directly
     
     modified = modify(encryptedInput)
     print("modified input: ", modified)
@@ -60,14 +62,11 @@ def verify(encryptedInput):
         return True
     return False
 
-
-
 def main():
     encrypted = submit()
     print("original: ", encrypted)
 
     print("verification:", verify(encrypted))
-
 
 
 if __name__=="__main__":
